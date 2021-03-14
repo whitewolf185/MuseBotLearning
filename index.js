@@ -3,7 +3,7 @@ const fs = require('fs');
 let TOKEN = ''
 
 let start = new Promise((resolve, reject) => {
-    fs.readFile(__dirname + '/token.txt', 'utf8', (err, data) => {
+    fs.readFile(__dirname + '\\token.txt', 'utf8', (err, data) => {
         if (err) {
             reject(err);
         }
@@ -45,12 +45,12 @@ start
                    
                     bot.sendMessage(id, "Привет пользователь. Тебе предстоит узнавать ноты в скрипичном ключе. Я тебе буду отправлять" +
                         "картинки, а ты пиши название ноты: до, ре, ми, фа, соль, ля, си")
-	            pic_num = helper.Rand(pic_num);
-		    console.log(pic_num);
-		    console.log(users.lendth);
-                    users[users.length].right_ans = ans_notes[pic_num];
-                    console.log("right ans is " + users[users.length].right_ans.ans)
-                    bot.sendPhoto(id, dir + users[users.length].right_ans.pic);
+	                pic_num = helper.Rand(pic_num);
+		            console.log(pic_num);
+		            console.log(users.length);
+                    users[users.length - 1].right_ans = ans_notes[pic_num];
+                    console.log("right ans is " + users[users.length - 1].right_ans.ans)
+                    bot.sendPhoto(id, dir + users[users.length - 1].right_ans.pic);
                 }
                 else{
                     bot.sendMessage(id, "Вы уже запустили меня");
@@ -73,23 +73,25 @@ start
             bot.on('message', (msg) => {
                 const {id} = msg.chat;
                 if(helper.exist(users, id) && commands.indexOf(msg.text) == -1) {
+                    // console.log("Im here")
                     let user_id = helper.check(users,id);
                     let answer = msg.text.toLowerCase();
+                    // console.log(users[user_id])
 
-                    if(answer === users[user_id].right_ans.ans){
+                    if(answer == users[user_id].right_ans.ans){
                         bot.sendMessage(id, 'Правильно! ✅');
                     }
                     else{
-                        bot.sendMessage(id, `Не правильно! ❌\nЭто *${ans_notes[right_ans].ans}*`, {
+                        bot.sendMessage(id, `Не правильно! ❌\nЭто *${users[user_id].right_ans.ans}*`, {
                             parse_mode: 'Markdown'
                         });
                     }
 
                     setTimeout(() => {
-                        users[user_id].right_ans = ans_notes[helper.Rand(pic_num)];
+                        pic_num = helper.Rand(pic_num);
+                        users[user_id].right_ans = ans_notes[pic_num];
                         console.log("right ans is " + users[user_id].right_ans.ans)
                         bot.sendPhoto(id, dir + users[user_id].right_ans.pic);
-                        console.log("right ans is " + notes[right_ans])
                     }, 300)
                 }
             })
