@@ -1,2 +1,6 @@
+#folders
 /node_modules/
+/.idea/
+
+#files
 token.txt
