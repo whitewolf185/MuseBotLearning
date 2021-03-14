@@ -5,7 +5,6 @@ let helper = {
         if(prev == result){
             return this.Rand();
         }
-        console.log(result)
         return result;
     },
 

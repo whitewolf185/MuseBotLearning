@@ -48,6 +48,7 @@ start
                 "картинки, а ты пиши название ноты: до, ре, ми, фа, соль, ля, си")
             pic_num = helper.Rand(pic_num);
             right_ans = find(pic_num);
+            console.log("right ans is " + notes[right_ans])
             bot.sendPhoto(id, dir + pics[pic_num]);
         })
 
@@ -86,6 +87,7 @@ start
                 setTimeout(() => {
                     pic_num = helper.Rand(pic_num);
                     right_ans = find(pic_num);
+                    console.log("right ans is " + notes[right_ans])
                     bot.sendPhoto(id, dir + pics[pic_num]);
                 }, 300)
             }
