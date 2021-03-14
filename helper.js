@@ -1,7 +1,7 @@
 //helper
 let helper = {
     Rand: function (prev){
-        let result = Math.floor(Math.random() * 16*1000) % 16;
+        let result = Math.floor(Math.random() * 17*1000) % 17;
         if(prev == result){
             return this.Rand();
         }
