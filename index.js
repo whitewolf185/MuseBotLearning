@@ -28,6 +28,7 @@ start
             let pic_num = -1;
             let users = [];
             const commands = ["/start", "/end"];
+	    console.log("BOT STARTED.....");
 
     //start bot
             bot.onText(/\/start/, (msg) => {
@@ -41,10 +42,13 @@ start
                         name: msg.chat.username,
                         right_ans: {}
                     });
-                    started = true;
+                   
                     bot.sendMessage(id, "Привет пользователь. Тебе предстоит узнавать ноты в скрипичном ключе. Я тебе буду отправлять" +
                         "картинки, а ты пиши название ноты: до, ре, ми, фа, соль, ля, си")
-                    users[users.length].right_ans = ans_notes[helper.Rand(pic_num)];
+	            pic_num = helper.Rand(pic_num);
+		    console.log(pic_num);
+		    console.log(users.lendth);
+                    users[users.length].right_ans = ans_notes[pic_num];
                     console.log("right ans is " + users[users.length].right_ans.ans)
                     bot.sendPhoto(id, dir + users[users.length].right_ans.pic);
                 }
