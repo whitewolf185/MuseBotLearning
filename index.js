@@ -21,16 +21,18 @@ start
 
             const helper = require('./helper');
             const ans_notes = require('./array-notes');
-
             const dir = "./pic/";
+
+
             let right_ans = -1;
             let started = false;
             let pic_num = -1;
-
+            let users = [];
 
     //start bot
             bot.onText(/\/start/, (msg) =>{
-                console.log("New user has started the bot")
+                // console.log(`User  has started the bot`)
+                console.log(msg);
                 const {id} = msg.chat;
                 started = true;
                 bot.sendMessage(id, "Привет пользователь. Тебе предстоит узнавать ноты в скрипичном ключе. Я тебе буду отправлять" +
@@ -48,7 +50,7 @@ start
                     right_ans = -1;
                     started = false;
                     pic_num = -1
-                    console.log(`User ${msg.chat.id} end using bot`)
+                    // console.log(`User ${msg.chat.id} end using bot`)
                 }
             })
 
