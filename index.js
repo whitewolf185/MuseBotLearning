@@ -3,7 +3,7 @@ const fs = require('fs');
 let TOKEN = ''
 
 let start = new Promise((resolve, reject) => {
-    fs.readFile(__dirname + '\\token.txt', 'utf8', (err, data) => {
+    fs.readFile(__dirname + '/token.txt', 'utf8', (err, data) => {
         if (err) {
             reject(err);
         }
@@ -46,10 +46,8 @@ start
                     bot.sendMessage(id, "Привет пользователь. Тебе предстоит узнавать ноты в скрипичном ключе. Я тебе буду отправлять" +
                         "картинки, а ты пиши название ноты: до, ре, ми, фа, соль, ля, си")
 	                pic_num = helper.Rand(pic_num);
-		            console.log(pic_num);
-		            console.log(users.length);
                     users[users.length - 1].right_ans = ans_notes[pic_num];
-                    console.log("right ans is " + users[users.length - 1].right_ans.ans)
+                    // console.log("right ans is " + users[users.length - 1].right_ans.ans)
                     bot.sendPhoto(id, dir + users[users.length - 1].right_ans.pic);
                 }
                 else{
@@ -90,7 +88,7 @@ start
                     setTimeout(() => {
                         pic_num = helper.Rand(pic_num);
                         users[user_id].right_ans = ans_notes[pic_num];
-                        console.log("right ans is " + users[user_id].right_ans.ans)
+                        // console.log("right ans is " + users[user_id].right_ans.ans)
                         bot.sendPhoto(id, dir + users[user_id].right_ans.pic);
                     }, 300)
                 }
