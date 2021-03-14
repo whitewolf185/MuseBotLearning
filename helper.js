@@ -8,14 +8,25 @@ let helper = {
         return result;
     },
 
+    //для получения индекса в массиве users
     check: function (arr, elem){
         let result = -1;
         arr.forEach((item,i,array) => {
-            if (item === elem){
+            if (item.id === elem){
                 result = i;
             }
-            // console.log(item)
         })
+        return result;
+    },
+
+    exist: function (arr, elem){
+        let result = false;
+        arr.forEach((item,i, array) => {
+            if(item.id == elem){
+                result = true;
+            }
+        })
+
         return result;
     }
 }

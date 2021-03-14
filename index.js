@@ -27,6 +27,7 @@ start
             let right_ans = -1;
             let pic_num = -1;
             let users = [];
+            const commands = ["/start", "/end"];
 
     //start bot
             bot.onText(/\/start/, (msg) => {
@@ -67,7 +68,7 @@ start
     //react on message
             bot.on('message', (msg) => {
                 const {id} = msg.chat;
-                if(helper.exist(users, id) && msg.text != "/end") {
+                if(helper.exist(users, id) && commands.indexOf(msg.text) == -1) {
                     let user_id = helper.check(users,id);
                     let answer = msg.text.toLowerCase();
 
