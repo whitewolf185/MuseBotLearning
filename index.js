@@ -25,46 +25,53 @@ start
 
 
             let right_ans = -1;
-            let started = false;
             let pic_num = -1;
             let users = [];
 
     //start bot
-            bot.onText(/\/start/, (msg) =>{
-                // console.log(`User  has started the bot`)
-                console.log(msg);
+            bot.onText(/\/start/, (msg) => {
                 const {id} = msg.chat;
-                started = true;
-                bot.sendMessage(id, "Привет пользователь. Тебе предстоит узнавать ноты в скрипичном ключе. Я тебе буду отправлять" +
-                    "картинки, а ты пиши название ноты: до, ре, ми, фа, соль, ля, си")
-                right_ans = helper.Rand(pic_num);
-                console.log("right ans is " + ans_notes[right_ans].ans)
-                bot.sendPhoto(id, dir + ans_notes[right_ans].pic);
+                if(!helper.exist(users,id)) {
+
+                    console.log(`User ${msg.chat.username} has started the bot`)
+
+                    users.push({
+                        id: id,
+                        name: msg.chat.username,
+                        right_ans: {}
+                    });
+                    started = true;
+                    bot.sendMessage(id, "Привет пользователь. Тебе предстоит узнавать ноты в скрипичном ключе. Я тебе буду отправлять" +
+                        "картинки, а ты пиши название ноты: до, ре, ми, фа, соль, ля, си")
+                    users[users.length].right_ans = ans_notes[helper.Rand(pic_num)];
+                    console.log("right ans is " + users[users.length].right_ans.ans)
+                    bot.sendPhoto(id, dir + users[users.length].right_ans.pic);
+                }
+                else{
+                    bot.sendMessage(id, "Вы уже запустили меня");
+                }
             })
 
     //stop bot
             bot.onText(/\/end/, (msg) => {
-                if(started) {
-                    const {id} = msg.chat;
+                const {id} = msg.chat;
+                if(helper.exist(users,id)) {
+                    let user_id = helper.check(users,id);
+                    users.splice(user_id,1)
                     bot.sendMessage(id, "Заканчиваем тренировку...")
-                    right_ans = -1;
-                    started = false;
-                    pic_num = -1
-                    // console.log(`User ${msg.chat.id} end using bot`)
+                    console.log(`User ${msg.chat.username} end using bot`)
                 }
             })
 
 
     //react on message
             bot.on('message', (msg) => {
-                if(started && msg.text != "/end") {
-                    const {id} = msg.chat;
-                    let answer = msg.text.toLowerCase()
-                    // console.log(answer);
+                const {id} = msg.chat;
+                if(helper.exist(users, id) && msg.text != "/end") {
+                    let user_id = helper.check(users,id);
+                    let answer = msg.text.toLowerCase();
 
-                    let num_ans = helper.check(notes, answer)
-                    // console.log(right_ans + " " + num_ans + "\n")
-                    if(num_ans !== -1 && num_ans == right_ans){
+                    if(answer === users[user_id].right_ans.ans){
                         bot.sendMessage(id, 'Правильно! ✅');
                     }
                     else{
@@ -74,10 +81,10 @@ start
                     }
 
                     setTimeout(() => {
-                        pic_num = helper.Rand(pic_num);
-                        right_ans = find(pic_num);
+                        users[user_id].right_ans = ans_notes[helper.Rand(pic_num)];
+                        console.log("right ans is " + users[user_id].right_ans.ans)
+                        bot.sendPhoto(id, dir + users[user_id].right_ans.pic);
                         console.log("right ans is " + notes[right_ans])
-                        bot.sendPhoto(id, dir + pics[pic_num]);
                     }, 300)
                 }
             })
