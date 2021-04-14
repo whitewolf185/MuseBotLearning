@@ -44,7 +44,14 @@ start
                     });
                    
                     bot.sendMessage(id, "Привет пользователь. Тебе предстоит узнавать ноты в скрипичном ключе. Я тебе буду отправлять" +
-                        "картинки, а ты пиши название ноты: до, ре, ми, фа, соль, ля, си")
+                        "картинки, а ты пиши название ноты: до, ре, ми, фа, соль, ля, си", {
+                        reply_markup:{
+                            keyboard: [
+                                ['до','ре', 'ми', 'фа'],
+                                ['соль','ля', 'си']
+                            ]
+                        }
+                    })
 	                pic_num = helper.Rand(pic_num);
                     users[users.length - 1].right_ans = ans_notes[pic_num];
                     // console.log("right ans is " + users[users.length - 1].right_ans.ans)
